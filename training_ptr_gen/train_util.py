@@ -1,3 +1,8 @@
+import os
+import sys
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = '/'.join(dir_path.split('/')[:-1])
+sys.path.append(dir_path)
 from torch.autograd import Variable
 import numpy as np
 import torch

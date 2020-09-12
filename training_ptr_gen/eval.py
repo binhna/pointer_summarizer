@@ -1,6 +1,10 @@
 from __future__ import unicode_literals, print_function, division
 
 import os
+import sys
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = '/'.join(dir_path.split('/')[:-1])
+sys.path.append(dir_path)
 import time
 import sys
 
@@ -22,13 +26,13 @@ class Evaluate(object):
         self.vocab = Vocab(config.vocab_path, config.vocab_size)
         self.batcher = Batcher(config.eval_data_path, self.vocab, mode='eval',
                                batch_size=config.batch_size, single_pass=True)
-        time.sleep(15)
+        # time.sleep(15)
         model_name = os.path.basename(model_file_path)
 
         eval_dir = os.path.join(config.log_root, 'eval_%s' % (model_name))
         if not os.path.exists(eval_dir):
             os.mkdir(eval_dir)
-        self.summary_writer = tf.summary.FileWriter(eval_dir)
+        self.summary_writer = tf.summary.create_file_writer(eval_dir)
 
         self.model = Model(model_file_path, is_eval=True)
 

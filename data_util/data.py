@@ -36,7 +36,7 @@ class Vocab(object):
       for line in vocab_f:
         pieces = line.split()
         if len(pieces) != 2:
-          print 'Warning: incorrectly formatted line in vocabulary file: %s\n' % line
+          print(f'Warning: incorrectly formatted line in vocabulary file: {line}\n')
           continue
         w = pieces[0]
         if w in [SENTENCE_START, SENTENCE_END, UNKNOWN_TOKEN, PAD_TOKEN, START_DECODING, STOP_DECODING]:
@@ -47,10 +47,10 @@ class Vocab(object):
         self._id_to_word[self._count] = w
         self._count += 1
         if max_size != 0 and self._count >= max_size:
-          print "max_size of vocab was specified as %i; we now have %i words. Stopping reading." % (max_size, self._count)
+          print(f"max_size of vocab was specified as {max_size}; we now have {self._count} words. Stopping reading.")
           break
 
-    print "Finished constructing vocabulary of %i total words. Last word added: %s" % (self._count, self._id_to_word[self._count-1])
+    print(f"Finished constructing vocabulary of {self._count} total words. Last word added: {self._id_to_word[self._count-1]}")
 
   def word2id(self, word):
     if word not in self._word_to_id:
@@ -66,11 +66,11 @@ class Vocab(object):
     return self._count
 
   def write_metadata(self, fpath):
-    print "Writing word embedding metadata file to %s..." % (fpath)
+    print(f"Writing word embedding metadata file to {fpath}...")
     with open(fpath, "w") as f:
       fieldnames = ['word']
       writer = csv.DictWriter(f, delimiter="\t", fieldnames=fieldnames)
-      for i in xrange(self.size()):
+      for i in range(self.size()):
         writer.writerow({"word": self._id_to_word[i]})
 
 
@@ -91,10 +91,11 @@ def example_generator(data_path, single_pass):
         example_str = struct.unpack('%ds' % str_len, reader.read(str_len))[0]
         yield example_pb2.Example.FromString(example_str)
     if single_pass:
-      print "example_generator completed reading all datafiles. No more data."
+      print("example_generator completed reading all datafiles. No more data.")
       break
 
-
+# If a word in the article is OOV of vocabs, it will be added to article OOV
+# and irs id is len(vocabs) + len(article_OOV)
 def article2ids(article_words, vocab):
   ids = []
   oovs = []
@@ -110,7 +111,8 @@ def article2ids(article_words, vocab):
       ids.append(i)
   return ids, oovs
 
-
+# If a word in the abstract summary is OOV (both vocabs and OOV articles)
+# then its id is unk
 def abstract2ids(abstract_words, vocab, article_oovs):
   ids = []
   unk_id = vocab.word2id(UNKNOWN_TOKEN)

@@ -1,10 +1,14 @@
 from __future__ import unicode_literals, print_function, division
 
 import os
+import sys
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = '/'.join(dir_path.split('/')[:-1])
+sys.path.append(dir_path)
 import time
 import argparse
 
-import tensorflow as tf
+from torch.utils.tensorboard import SummaryWriter
 import torch
 from model import Model
 from torch.nn.utils import clip_grad_norm_
@@ -34,7 +38,7 @@ class Train(object):
         if not os.path.exists(self.model_dir):
             os.mkdir(self.model_dir)
 
-        self.summary_writer = tf.summary.FileWriter(train_dir)
+        self.summary_writer = SummaryWriter(train_dir)
 
     def save_model(self, running_avg_loss, iter):
         state = {

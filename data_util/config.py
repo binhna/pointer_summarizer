@@ -1,13 +1,18 @@
 import os
+import sys
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = '/'.join(dir_path.split('/')[:-1])
+sys.path.append(dir_path)
 
 root_dir = os.path.expanduser("~")
+print(root_dir)
 
-#train_data_path = os.path.join(root_dir, "ptr_nw/cnn-dailymail-master/finished_files/train.bin")
-train_data_path = os.path.join(root_dir, "ptr_nw/cnn-dailymail-master/finished_files/chunked/train_*")
-eval_data_path = os.path.join(root_dir, "ptr_nw/cnn-dailymail-master/finished_files/val.bin")
-decode_data_path = os.path.join(root_dir, "ptr_nw/cnn-dailymail-master/finished_files/test.bin")
-vocab_path = os.path.join(root_dir, "ptr_nw/cnn-dailymail-master/finished_files/vocab")
-log_root = os.path.join(root_dir, "ptr_nw/log")
+#train_data_path = os.path.join(root_dir, "Downloads/vinbdi/data/finished_files/train.bin")
+train_data_path = os.path.join(root_dir, "Downloads/vinbdi/data/finished_files/chunked/train_*")
+eval_data_path = os.path.join(root_dir, "Downloads/vinbdi/data/finished_files/val.bin")
+decode_data_path = os.path.join(root_dir, "Downloads/vinbdi/data/finished_files/test.bin")
+vocab_path = os.path.join(root_dir, "Downloads/vinbdi/data/finished_files/vocab")
+log_root = os.path.join(root_dir, "Downloads/vinbdi/data/log")
 
 # Hyperparameters
 hidden_dim= 256

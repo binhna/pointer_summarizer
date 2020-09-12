@@ -1,11 +1,15 @@
 #Content of this file is copied from https://github.com/abisee/pointer-generator/blob/master/
 import os
+import sys
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = '/'.join(dir_path.split('/')[:-1])
+sys.path.append(dir_path)
 import pyrouge
 import logging
 import tensorflow as tf
 
 def print_results(article, abstract, decoded_output):
-  print ("")
+  print("")
   print('ARTICLE:  %s', article)
   print('REFERENCE SUMMARY: %s', abstract)
   print('GENERATED SUMMARY: %s', decoded_output)
@@ -54,10 +58,14 @@ def calc_running_avg_loss(loss, running_avg_loss, summary_writer, step, decay=0.
   else:
     running_avg_loss = running_avg_loss * decay + (1 - decay) * loss
   running_avg_loss = min(running_avg_loss, 12)  # clip
-  loss_sum = tf.Summary()
-  tag_name = 'running_avg_loss/decay=%f' % (decay)
-  loss_sum.value.add(tag=tag_name, simple_value=running_avg_loss)
-  summary_writer.add_summary(loss_sum, step)
+
+  tag_name = f'running_avg_loss/decay={decay}'
+  summary_writer.add_scalar(tag_name, running_avg_loss, step)
+  summary_writer.flush()
+  # loss_sum = tf.Summary()
+  
+  # loss_sum.value.add(tag=tag_name, simple_value=running_avg_loss)
+  # summary_writer.add_summary(loss_sum, step)
   return running_avg_loss
 
 
