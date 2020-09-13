@@ -8,8 +8,8 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 dir_path = '/'.join(dir_path.split('/')[:-1])
 sys.path.append(dir_path)
 
-reload(sys)
-sys.setdefaultencoding('utf8')
+# reload(sys)
+# sys.setdefaultencoding('utf8')
 
 import os
 import time
