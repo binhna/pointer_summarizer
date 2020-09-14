@@ -208,5 +208,6 @@ if __name__ == '__main__':
     model_filename = sys.argv[1]
     beam_Search_processor = BeamSearch(model_filename)
     beam_Search_processor.decode()
-
+    # results_dict = rouge_eval(beam_Search_processor._rouge_ref_dir, beam_Search_processor._rouge_dec_dir)
+    # rouge_log(results_dict, beam_Search_processor._decode_dir)
 
