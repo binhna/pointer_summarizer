@@ -13,10 +13,12 @@ eval_data_path = os.path.join(root_dir, "Downloads/vinbdi/data/finished_files/va
 decode_data_path = os.path.join(root_dir, "Downloads/vinbdi/data/finished_files/test.bin")
 vocab_path = os.path.join(root_dir, "Downloads/vinbdi/data/finished_files/vocab")
 log_root = os.path.join(root_dir, "Downloads/vinbdi/data/log")
+summary_path = os.path.join(root_dir, "Downloads/vinbdi/summary_dir_incar_2")
+model_dir = os.path.join(summary_path, "saved_model")
 
 # Hyperparameters
 hidden_dim= 256
-emb_dim= 128
+emb_dim= 300
 batch_size= 8
 max_enc_steps=400
 max_dec_steps=100
